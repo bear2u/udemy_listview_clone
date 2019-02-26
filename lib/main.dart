@@ -48,6 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
     final TitleTheme = Theme.of(context).textTheme.title;
     final subTheme = Theme.of(context).textTheme.subtitle;
     final description = Theme.of(context).textTheme.body1;
+    final boldDescription = Theme.of(context).textTheme.body1.copyWith(fontWeight: FontWeight.bold);
     return Container(
       height: 150.0,
       child: Row(
@@ -70,11 +71,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   Text('Will Park', style: subTheme,),
                   Row(
                     children: <Widget>[
-                      StarRating(rating: 3.0,),
-                      Text('4.6', style: description,),
+                      StarRating(rating: 3.0, size: 20.0, color: Colors.amber,),
+                      Text('4.6', style: boldDescription,),
+                      Text('(109)', style: description,)
                     ],
                   ),
-                  Text('등록됨', style: description,)
+                  Text(r'$13,000', style: boldDescription,)
                 ],
               ),
             ),
