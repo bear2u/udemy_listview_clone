@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
+import 'package:udemy_listview_clone/item.dart';
 
 void main() => runApp(MyApp());
 
@@ -27,56 +28,152 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    final items = List<String>.generate(1000, (i) => "Item $i");
+  List<Item> items = [];
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: ListView.builder(
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            return _buildChild(items[index]);
-          },
-        )
-        );
+  _buildItems() {
+    items.add(Item(
+        thumbnail:
+            "https://udemy-images.udemy.com/course/480x270/2171084_186f_3.jpg",
+        title: "Flutter 입문",
+        isBestSeller: true,
+        author: "입문자",
+        ranking: 4.5,
+        hit: 1200,
+        price: "13,000"));
+
+    items.add(Item(
+        thumbnail:
+            "https://udemy-images.udemy.com/course/480x270/1575278_a828_3.jpg",
+        title: "Flutter 입문",
+        isBestSeller: false,
+        author: "입문자",
+        ranking: 3.0,
+        hit: 1200,
+        price: "13,000"));
+
+    items.add(Item(
+        thumbnail:
+            "https://udemy-images.udemy.com/course/480x270/2171084_186f_3.jpg",
+        title: "Flutter 입문",
+        isBestSeller: true,
+        author: "입문자",
+        ranking: 4.5,
+        hit: 1200,
+        price: "13,000"));
+
+    items.add(Item(
+        thumbnail:
+            "https://udemy-images.udemy.com/course/480x270/1708340_7108_2.jpg",
+        title: "Flutter 입문",
+        isBestSeller: false,
+        author: "입문자",
+        ranking: 2.0,
+        hit: 1200,
+        price: "13,000"));
   }
 
-  _buildChild(item) {
-    final TitleTheme = Theme.of(context).textTheme.title;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    _buildItems();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: ListView.builder(
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return _buildChild(items[index]);
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          items.add(Item(
+              thumbnail:
+                  "https://udemy-images.udemy.com/course/480x270/2171084_186f_3.jpg",
+              title: "Flutter 입문",
+              isBestSeller: true,
+              author: "입문자",
+              ranking: 4.5,
+              hit: 1200,
+              price: "13,000"));
+          setState(() {});
+        },
+        child: Icon(Icons.add),
+      ),
+    );
+  }
+
+  _buildChild(Item item) {
+    final titleTheme = Theme.of(context).textTheme.title;
     final subTheme = Theme.of(context).textTheme.subtitle;
     final description = Theme.of(context).textTheme.body1;
-    final boldDescription = Theme.of(context).textTheme.body1.copyWith(fontWeight: FontWeight.bold);
+    final boldDescription =
+        Theme.of(context).textTheme.body1.copyWith(fontWeight: FontWeight.bold);
     return Container(
       height: 150.0,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(8.0),
-            width: 150.0,
-            child: Image.network("https://udemy-images.udemy.com/course/480x270/2171084_186f_3.jpg", fit: BoxFit.fill,),
-          ),
           Expanded(
             child: Container(
-              padding: EdgeInsets.only(left: 0, top: 8.0, bottom: 8.0, right: 8.0),
+              padding: EdgeInsets.all(8.0),
+              child: Image.network(
+                item.thumbnail,
+                fit: BoxFit.fill,
+              ),
+            ),
+            flex: 4,
+          ),
+          Expanded(
+            flex: 6,
+            child: Container(
+              padding:
+                  EdgeInsets.only(left: 0, top: 8.0, bottom: 8.0, right: 8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Text('모던 리엑트와 리덕스', style: TitleTheme,),
-                  Image.asset("assets/badge_bs.png", width: 110.0,),
-                  Text('Will Park', style: subTheme,),
+                  Text(
+                    item.title,
+                    style: titleTheme,
+                  ),
+                  item.isBestSeller
+                      ? Image.asset(
+                          "assets/badge_bs.png",
+                          width: 110.0,
+                        )
+                      : Container(),
+                  Text(
+                    item.author,
+                    style: subTheme,
+                  ),
                   Row(
                     children: <Widget>[
-                      StarRating(rating: 3.0, size: 20.0, color: Colors.amber,),
-                      Text('4.6', style: boldDescription,),
-                      Text('(109)', style: description,)
+                      StarRating(
+                          rating: item.ranking,
+                          size: 20.0,
+                          color: Colors.amber),
+                      Text(
+                        '${item.ranking}',
+                        style: boldDescription,
+                      ),
+                      Text(
+                        '${item.hit}',
+                        style: description,
+                      )
                     ],
                   ),
-                  Text(r'$13,000', style: boldDescription,)
+                  Text(
+                    r'$' + item.price,
+                    style: boldDescription,
+                  )
                 ],
               ),
             ),
