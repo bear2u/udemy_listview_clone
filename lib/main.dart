@@ -37,32 +37,39 @@ class _MyHomePageState extends State<MyHomePage> {
         body: ListView.builder(
           itemCount: items.length,
           itemBuilder: (context, index) {
-            return ListTile(
-              title: _buildChild(items[index]),
-            );
+            return _buildChild(items[index]);
           },
         )
         );
   }
 
   _buildChild(item) {
-    return Row(
-      children: <Widget>[
-        Expanded(
-          child: Container(
-            color: Colors.red,
-            child: Text('사진'),
+    return Container(
+      height: 150.0,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Container(
+            width: 120.0,
+            child: Image.network("https://udemy-images.udemy.com/course/480x270/2171084_186f_3.jpg", fit: BoxFit.fill,),
           ),
-          flex: 2,
-        ),
-        Expanded(
-          child: Container(
-            color: Colors.blue,
-            child: Text('내용'),
-          ),
-          flex: 8,
-        )
-      ],
+          Expanded(
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text('모던 리엑트와 리덕스'),
+                  Image.asset("assets/badge_bs.png"),
+                  Text('Will Park'),
+                  Text('4.6'),
+                  Text('등록됨')
+                ],
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
