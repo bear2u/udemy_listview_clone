@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating/flutter_rating.dart';
+import 'package:udemy_listview_clone/detail.dart';
 import 'package:udemy_listview_clone/item.dart';
 
 void main() => runApp(MyApp());
@@ -89,7 +90,13 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView.builder(
         itemCount: items.length,
         itemBuilder: (context, index) {
-          return _buildChild(items[index]);
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => DetailScreen(item: items[index])));
+            },
+            child: _buildChild(items[index]),
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(
@@ -165,7 +172,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         style: boldDescription,
                       ),
                       Text(
-                        '${item.hit}',
+                        '(${item.hit})',
                         style: description,
                       )
                     ],
