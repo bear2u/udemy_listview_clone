@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating/flutter_rating.dart';
 
 void main() => runApp(MyApp());
 
@@ -44,26 +45,36 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   _buildChild(item) {
+    final TitleTheme = Theme.of(context).textTheme.title;
+    final subTheme = Theme.of(context).textTheme.subtitle;
+    final description = Theme.of(context).textTheme.body1;
     return Container(
       height: 150.0,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
-            width: 120.0,
+            padding: EdgeInsets.all(8.0),
+            width: 150.0,
             child: Image.network("https://udemy-images.udemy.com/course/480x270/2171084_186f_3.jpg", fit: BoxFit.fill,),
           ),
           Expanded(
             child: Container(
+              padding: EdgeInsets.only(left: 0, top: 8.0, bottom: 8.0, right: 8.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Text('모던 리엑트와 리덕스'),
-                  Image.asset("assets/badge_bs.png"),
-                  Text('Will Park'),
-                  Text('4.6'),
-                  Text('등록됨')
+                  Text('모던 리엑트와 리덕스', style: TitleTheme,),
+                  Image.asset("assets/badge_bs.png", width: 110.0,),
+                  Text('Will Park', style: subTheme,),
+                  Row(
+                    children: <Widget>[
+                      StarRating(rating: 3.0,),
+                      Text('4.6', style: description,),
+                    ],
+                  ),
+                  Text('등록됨', style: description,)
                 ],
               ),
             ),
