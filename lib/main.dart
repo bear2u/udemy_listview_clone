@@ -26,17 +26,43 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
+    final items = List<String>.generate(1000, (i) => "Item $i");
 
     return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Text("Body")       // This trailing comma makes auto-formatting nicer for build methods.
+        appBar: AppBar(
+          title: Text(widget.title),
+        ),
+        body: ListView.builder(
+          itemCount: items.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              title: _buildChild(items[index]),
+            );
+          },
+        )
+        );
+  }
+
+  _buildChild(item) {
+    return Row(
+      children: <Widget>[
+        Expanded(
+          child: Container(
+            color: Colors.red,
+            child: Text('사진'),
+          ),
+          flex: 2,
+        ),
+        Expanded(
+          child: Container(
+            color: Colors.blue,
+            child: Text('내용'),
+          ),
+          flex: 8,
+        )
+      ],
     );
   }
 }
